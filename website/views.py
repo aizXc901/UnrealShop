@@ -1,6 +1,7 @@
-from flask import Blueprint, render_template, flash, redirect, request, jsonify
-from . import db
-from intasend import APIService
+from flask import Blueprint, render_template
+from .models import Product
+from .db import db
+from sqlalchemy.sql import text
 
 
 views = Blueprint('views', __name__)
@@ -8,4 +9,23 @@ views = Blueprint('views', __name__)
 
 @views.route('/')
 def home():
-    return ("<center><h2>Добро пожаловать в наш магазин 'UnrealShop'</h2></center>")
+    try:
+        # Проверяем подключение к БД
+        db.session.execute(text("SELECT 1"))
+
+        # Добавляем тестовый товар если таблица пуста
+        if not Product.query.first():
+            test_product = Product(
+                name="Тестовый товар",
+                price=99.99,
+                description="Пример описания"
+            )
+            db.session.add(test_product)
+            db.session.commit()
+
+        products = Product.query.all()
+        return render_template("home.html", products=products)
+
+    except Exception as e:
+        print(f"Ошибка БД: {e}")  # Вывод в консоль сервера
+        return "<center><h2>Добро пожаловать в UnrealShop (режим без БД)</h2></center>"

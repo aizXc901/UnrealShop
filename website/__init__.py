@@ -1,19 +1,11 @@
 from flask import Flask, render_template
-from flask_sqlalchemy import SQLAlchemy
-from flask_login import LoginManager
+from .db import db
 
-
-db = SQLAlchemy()
-DB_NAME = 'database.sqlite3'
-
-
-def create_database():
-    db.create_all()
-    print('Database Created')
 
 def create_app():
     app = Flask(__name__)
-    app.config['SQLALCHEMY_DATABASE_URI'] = f'sqlite:///{DB_NAME}'
+    app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///shop.db'
+    app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
     db.init_app(app)
 
@@ -21,11 +13,11 @@ def create_app():
     def page_not_found(error):
         return render_template('404.html')
 
-    from .views import views
-
-    app.register_blueprint(views, url_prefix='/')
-
     with app.app_context():
-         create_database()
+        from . import models
+        db.create_all()
+
+    from . import views
+    app.register_blueprint(views.views)
 
     return app

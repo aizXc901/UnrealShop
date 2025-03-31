@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+
+{% block title %}Home{% endblock %}
+
+{% block content %}
+    <section class="hero">
+        <h2>Welcome to Our Shop</h2>
+        <p>Discover amazing products at great prices</p>
+        <a href="#" class="btn">Shop Now</a>
+    </section>
+
+    <section class="featured-products">
+        <h3>Featured Products</h3>
+        <div class="product-grid">
+            <!-- Здесь будут карточки товаров -->
+            <div class="product-card">
+                <img src="{{ url_for('static', filename='images/placeholder.jpg') }}" alt="Product">
+                <h4>Product Name</h4>
+                <p>$19.99</p>
+                <button>Add to Cart</button>
+            </div>
+            <!-- Повторить для других товаров -->
+        </div>
+    </section>
+{% endblock %}
