@@ -1,20 +1,19 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ru">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{% block title %}{% endblock %} - My Shop</title>
+    <title>{% block title %}{% endblock %} - UnrealShop</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
 </head>
 <body>
     <header>
-        <h1>My Online Shop</h1>
+        <h1>UnrealShop</h1>
         <nav>
             <ul>
-                <li><a href="{{ url_for('views.home') }}">Home</a></li>
-                <li><a href="#">Products</a></li>
-                <li><a href="#">About</a></li>
-                <li><a href="#">Contact</a></li>
+                <li><a href="{{ url_for('views.home') }}">Главная</a></li>
+                <li><a href="#">Товары</a></li>
+                <li><a href="#">О нас</a></li>
             </ul>
         </nav>
     </header>
@@ -25,7 +24,7 @@
     </main>
 
     <footer>
-        <p>&copy; 2023 My Online Shop. All rights reserved.</p>
+        <p>&copy; 2025 Данный магазин - макет. Не является коммерческим проектом.</p>
     </footer>
 </body>
 </html>
