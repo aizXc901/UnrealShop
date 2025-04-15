@@ -1,4 +1,6 @@
 from flask import Blueprint, render_template
+from flask_login import login_required, current_user
+
 from .models import Product
 from .db import db
 from sqlalchemy.sql import text
@@ -31,3 +33,13 @@ def home():
     except Exception as e:
         print(f"Ошибка БД: {e}")  # Вывод в консоль сервера
         return "<center><h2>Добро пожаловать в UnrealShop (режим без БД)</h2></center>"
+
+@views.route('/profile')
+@login_required
+def profile():
+    return render_template('profile.html', user=current_user)
+
+@views.route('/cart')
+@login_required
+def cart():
+    return render_template('cart.html')

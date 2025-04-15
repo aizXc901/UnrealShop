@@ -8,7 +8,12 @@
         <p>Хоть он и ненастоящий, но все еще потрясающий!</p>
         <a href="#" class="btn">Окунуться в мир виртуальных товаров!</a>
     </section>
-
+    <!-- Добавим кнопку перехода в профиль -->
+        {% if current_user.is_authenticated %}
+            <a href="{{ url_for('views.profile') }}"><button>👤 Профиль</button></a>
+        {% else %}
+            <a href="{{ url_for('auth.login') }}"><button>🔐 Войти</button></a>
+        {% endif %}
     <section class="featured-products">
         <h3>Рекомендуем к покупке</h3>
         <div class="product-grid">
