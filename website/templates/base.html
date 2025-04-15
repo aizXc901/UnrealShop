@@ -22,7 +22,13 @@
         {% block content %}
         {% endblock %}
     </main>
-
+    <nav>
+  {% if current_user.is_authenticated %}
+    <a href="{{ url_for('auth.logout') }}">Выйти</a>
+  {% else %}
+    <a href="{{ url_for('auth.login') }}">Войти</a>
+  {% endif %}
+</nav>
     <footer>
         <p>&copy; 2025 Данный магазин - макет. Не является коммерческим проектом.</p>
     </footer>

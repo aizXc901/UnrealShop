@@ -12,14 +12,10 @@
     <section class="featured-products">
         <h3>Рекомендуем к покупке</h3>
         <div class="product-grid">
-            <!-- Здесь будут карточки товаров -->
-            <div class="product-card">
-                <img src="{{ url_for('static', filename='images/placeholder.jpg') }}" alt="Product">
-                <h4>Название товара</h4>
-                <p>ʛ 4.99</p>
-                <button>Добавить в корзину</button>
+                <!-- КНОПКА регистрации -->
+                <a href="{{ url_for('auth.register') }}" class="btn">Зарегистрироваться</a>
             </div>
-            <!-- Повторить для других товаров -->
         </div>
     </section>
 {% endblock %}
+

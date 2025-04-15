@@ -2,6 +2,8 @@ from flask import Blueprint, render_template
 from .models import Product
 from .db import db
 from sqlalchemy.sql import text
+from flask import Blueprint, render_template, request, redirect, url_for
+
 
 
 views = Blueprint('views', __name__)
