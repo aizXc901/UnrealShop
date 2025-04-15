@@ -1,26 +1,57 @@
 {% extends "base.html" %}
 
-{% block title %}Home{% endblock %}
+{% block title %}Главная{% endblock %}
 
 {% block content %}
-    <section class="hero">
-        <h2>Добро пожаловать в наш магазин!</h2>
-        <p>Хоть он и ненастоящий, но все еще потрясающий!</p>
-        <a href="#" class="btn">Окунуться в мир виртуальных товаров!</a>
-    </section>
-    <!-- Добавим кнопку перехода в профиль -->
-        {% if current_user.is_authenticated %}
-            <a href="{{ url_for('views.profile') }}"><button>👤 Профиль</button></a>
-        {% else %}
-            <a href="{{ url_for('auth.login') }}"><button>🔐 Войти</button></a>
-        {% endif %}
-    <section class="featured-products">
-        <h3>Рекомендуем к покупке</h3>
-        <div class="product-grid">
-                <!-- КНОПКА регистрации -->
-                <a href="{{ url_for('auth.register') }}" class="btn">Зарегистрироваться</a>
-            </div>
-        </div>
-    </section>
-{% endblock %}
+<section class="hero">
+    <h2>Добро пожаловать в наш магазин!</h2>
+    <p>Хоть он и ненастоящий, но всё ещё потрясающий!</p>
+    <a href="{{ url_for('views.catalog') }}" class="btn">🛍️ Окунуться в мир виртуальных товаров!</a>
+</section>
 
+<!-- КНОПКА переход в профиль или вход -->
+<div class="user-actions">
+    {% if current_user.is_authenticated %}
+        <a href="{{ url_for('views.profile') }}"><button>👤 Профиль</button></a>
+    {% else %}
+        <a href="{{ url_for('auth.login') }}"><button>🔐 Войти</button></a>
+    {% endif %}
+</div>
+
+<!-- КНОПКА Секция с рекомендациями -->
+<section class="featured-products">
+    <h3>✨ Рекомендуем к покупке</h3>
+    <div class="product-grid">
+
+        <!-- Пример товаров -->
+        <div class="product-card">
+            <img src="{{ url_for('static', filename='img/tshirt.png') }}" alt="Футболка">
+            <h4>Футболка с принтом</h4>
+            <p>Крутая футболка с уникальным дизайном</p>
+            <button>Подробнее</button>
+        </div>
+
+        <div class="product-card">
+            <img src="{{ url_for('static', filename='img/bag.png') }}" alt="Сумка">
+            <h4>Сумка через плечо</h4>
+            <p>Минималистичный и стильный аксессуар</p>
+            <button>Подробнее</button>
+        </div>
+
+        <div class="product-card">
+            <img src="{{ url_for('static', filename='img/mug.png') }}" alt="Кружка">
+            <h4>Кружка "Утренняя магия"</h4>
+            <p>Начни день с любимой кружки!</p>
+            <button>Подробнее</button>
+        </div>
+
+    </div>
+
+    <!-- КНОПКА регистрации -->
+    {% if not current_user.is_authenticated %}
+        <div class="register-call">
+            <a href="{{ url_for('auth.register') }}" class="btn">📩 Зарегистрироваться</a>
+        </div>
+    {% endif %}
+</section>
+{% endblock %}

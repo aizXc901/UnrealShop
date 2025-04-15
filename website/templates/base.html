@@ -2,18 +2,24 @@
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{% block title %}{% endblock %} - UnrealShop</title>
+    <title>{% block title %}{% endblock %}</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
 </head>
 <body>
     <header>
-        <h1>UnrealShop</h1>
+        <h1><a href="{{ url_for('views.home') }}">UnrealShop</a></h1>
         <nav>
             <ul>
-                <li><a href="{{ url_for('views.home') }}">Главная</a></li>
-                <li><a href="#">Товары</a></li>
-                <li><a href="#">О нас</a></li>
+                <li><a href="{{ url_for('views.home') }}">🏠 Главная</a></li>
+                <li><a href="{{ url_for('views.catalog') }}">🛍️ Товары</a></li>
+                <li><a href="#">ℹ️ О нас</a></li>
+                {% if current_user.is_authenticated %}
+                    <li><a href="{{ url_for('views.profile') }}">👤 Профиль</a></li>
+                    <li><a href="{{ url_for('auth.logout') }}">🚪 Выйти</a></li>
+                {% else %}
+                    <li><a href="{{ url_for('auth.login') }}">🔐 Войти</a></li>
+                    <li><a href="{{ url_for('auth.register') }}">📩 Регистрация</a></li>
+                {% endif %}
             </ul>
         </nav>
     </header>
@@ -22,15 +28,9 @@
         {% block content %}
         {% endblock %}
     </main>
-    <nav>
-  {% if current_user.is_authenticated %}
-    <a href="{{ url_for('auth.logout') }}">Выйти</a>
-  {% else %}
-    <a href="{{ url_for('auth.login') }}">Войти</a>
-  {% endif %}
-</nav>
+
     <footer>
-        <p>&copy; 2025 Данный магазин - макет. Не является коммерческим проектом.</p>
+        <p>&copy; 2025 Данный магазин — макет. Не является коммерческим проектом.</p>
     </footer>
 </body>
 </html>

@@ -14,21 +14,21 @@ def register():
 
         print(f"Received email: {email}, password: {password}")  # Отладочный вывод
 
-        # Проверка на пустые поля
+        # проверка на п поля
         if not email or not password:
             flash("Заполните все поля")
             return redirect(url_for('auth.register'))
 
-        # Проверка на существующего пользователя
+        # проверка на сущ польз
         existing_user = User.query.filter_by(email=email).first()
         if existing_user:
             flash("Такой email уже зарегистрирован")
             return redirect(url_for('auth.register'))
 
-        # Хеширование пароля
+        # хеширование пар
         hashed_password = generate_password_hash(password, method='pbkdf2:sha256:600000')
 
-        # Создание нового пользователя
+        # нов польз
         new_user = User(email=email, password=hashed_password)
 
         try:
@@ -61,7 +61,6 @@ def login():
 
     return render_template('login.html')
 
-# ⬇️ Выход
 @auth.route('/logout')
 @login_required
 def logout():

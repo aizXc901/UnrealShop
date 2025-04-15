@@ -1,15 +1,11 @@
-from flask import Blueprint, render_template
 from flask_login import login_required, current_user
 
 from .models import Product
 from .db import db
 from sqlalchemy.sql import text
-from flask import Blueprint, render_template, request, redirect, url_for
-
-
+from flask import Blueprint, render_template
 
 views = Blueprint('views', __name__)
-
 
 @views.route('/')
 def home():
@@ -43,3 +39,19 @@ def profile():
 @login_required
 def cart():
     return render_template('cart.html')
+
+@views.route('/catalog')
+def catalog():
+    return render_template('catalog.html')
+
+@views.route('/catalog/clothing')
+def clothing():
+    return render_template('clothing.html')
+
+@views.route('/catalog/accessories')
+def accessories():
+    return render_template('accessories.html')
+
+@views.route('/catalog/gifts')
+def gifts():
+    return render_template('gifts.html')

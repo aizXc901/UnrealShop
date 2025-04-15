@@ -3,7 +3,7 @@ from flask_login import LoginManager, current_user
 from .db import db
 
 def create_app():
-    app = Flask(__name__)
+    app = Flask(__name__, static_folder='../static')
     app.secret_key = 'secretKey'
     app.config['SESSION_TYPE'] = 'filesystem'
     app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///shop.db'
@@ -11,7 +11,6 @@ def create_app():
 
     db.init_app(app)
 
-    # 👇 Настройка Flask-Login
     from .models import User
     login_manager = LoginManager()
     login_manager.login_view = 'auth.login'
@@ -21,7 +20,6 @@ def create_app():
     def load_user(user_id):
         return User.query.get(int(user_id))
 
-    # 👇 Вот здесь добавляем current_user в шаблоны
     @app.context_processor
     def inject_user():
         return dict(current_user=current_user)
