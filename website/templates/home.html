@@ -46,12 +46,5 @@
         </div>
 
     </div>
-
-    <!-- КНОПКА регистрации -->
-    {% if not current_user.is_authenticated %}
-        <div class="register-call">
-            <a href="{{ url_for('auth.register') }}" class="btn">📩 Зарегистрироваться</a>
-        </div>
-    {% endif %}
 </section>
 {% endblock %}
