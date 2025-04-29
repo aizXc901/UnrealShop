@@ -18,33 +18,18 @@
     {% endif %}
 </div>
 
-<!-- КНОПКА Секция с рекомендациями -->
+<!-- Секция с рекомендациями -->
 <section class="featured-products">
     <h3>✨ Рекомендуем к покупке</h3>
     <div class="product-grid">
-
-        <!-- Пример товаров -->
+        {% for product in products %}
         <div class="product-card">
-            <img src="{{ url_for('static', filename='img/tshirt.png') }}" alt="Футболка">
-            <h4>Футболка с принтом</h4>
-            <p>Крутая футболка с уникальным дизайном</p>
-            <button>Подробнее</button>
+            <img src="{{ url_for('static', filename=product.image) }}" alt="{{ product.name }}">
+            <h4>{{ product.name }}</h4>
+            <p>{{ product.description|truncate(80) }}</p>
+            <a href="{{ url_for('views.product', product_id=product.id) }}" class="btn">Подробнее</a>
         </div>
-
-        <div class="product-card">
-            <img src="{{ url_for('static', filename='img/bag.png') }}" alt="Сумка">
-            <h4>Сумка через плечо</h4>
-            <p>Минималистичный и стильный аксессуар</p>
-            <button>Подробнее</button>
-        </div>
-
-        <div class="product-card">
-            <img src="{{ url_for('static', filename='img/mug.png') }}" alt="Кружка">
-            <h4>Кружка "Утренняя магия"</h4>
-            <p>Начни день с любимой кружки!</p>
-            <button>Подробнее</button>
-        </div>
-
+        {% endfor %}
     </div>
 </section>
 {% endblock %}

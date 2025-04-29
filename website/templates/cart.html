@@ -1,3 +1,31 @@
-<h1>🛒 Моя корзина</h1>
-<p>Здесь будет ваша корзина...</p>
-<a href="{{ url_for('views.profile') }}">⬅️ Назад в профиль</a>
+{% extends "base.html" %}
+
+{% block title %}Корзина{% endblock %}
+
+{% block content %}
+<h2>🛒 Моя корзина</h2>
+
+<a href="{{ url_for('views.home') }}" class="btn">🏠 На главную</a>
+<br><br>
+
+<div class="product-grid">
+    {% if cart_items %}
+        {% for item in cart_items %}
+            <div class="product-card">
+                <img src="{{ url_for('static', filename=item.product.image) }}" alt="{{ item.product.name }}">
+                <h4>{{ item.product.name }}</h4>
+                <p>Цена: {{ item.product.price | round(2) }} руб.</p>
+                <p>Количество: {{ item.quantity }}</p>
+                <p>Общая стоимость: {{ (item.product.price * item.quantity) | round(2) }} руб.</p>
+
+                <!-- Форма уменьшения или удаления товара -->
+                <form action="{{ url_for('views.remove_from_cart', item_id=item.id) }}" method="POST">
+                    <button type="submit" class="btn">➖ Удалить / уменьшить</button>
+                </form>
+            </div>
+        {% endfor %}
+    {% else %}
+        <p>Ваша корзина пуста.</p>
+    {% endif %}
+</div>
+{% endblock %}

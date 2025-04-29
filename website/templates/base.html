@@ -12,9 +12,10 @@
             <ul>
                 <li><a href="{{ url_for('views.home') }}">🏠 Главная</a></li>
                 <li><a href="{{ url_for('views.catalog') }}">🛍️ Товары</a></li>
-                <li><a href="#">ℹ️ О нас</a></li>
+                <li><a href="{{ url_for('views.about') }}">ℹ️ О нас</a></li>
                 {% if current_user.is_authenticated %}
                     <li><a href="{{ url_for('views.profile') }}">👤 Профиль</a></li>
+                    <li><a href="{{ url_for('views.cart') }}">🛒 Корзина</a></li>
                     <li><a href="{{ url_for('auth.logout') }}">🚪 Выйти</a></li>
                 {% else %}
                     <li><a href="{{ url_for('auth.login') }}">🔐 Войти</a></li>

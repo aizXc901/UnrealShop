@@ -1,17 +1,27 @@
 from flask import Flask, render_template
 from flask_login import LoginManager, current_user
-from .db import db
+from .db import db, migrate
+from .models import User
+
 
 def create_app():
     app = Flask(__name__, static_folder='../static')
     app.secret_key = 'secretKey'
-    app.config['SESSION_TYPE'] = 'filesystem'
     app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///shop.db'
     app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
     db.init_app(app)
+    migrate.init_app(app, db)  # Если используете Flask-Migrate
 
-    from .models import User
+    # Регистрация Blueprints и т.д.
+    from .views import views
+    from .auth import auth
+    app.register_blueprint(views)
+    app.register_blueprint(auth)
+
+    with app.app_context():
+        db.create_all()  # Создаёт таблицы при запуске приложения
+
     login_manager = LoginManager()
     login_manager.login_view = 'auth.login'
     login_manager.init_app(app)
@@ -20,23 +30,4 @@ def create_app():
     def load_user(user_id):
         return User.query.get(int(user_id))
 
-    @app.context_processor
-    def inject_user():
-        return dict(current_user=current_user)
-
-    @app.errorhandler(404)
-    def page_not_found(error):
-        return render_template('404.html')
-
-    with app.app_context():
-        from . import models
-        db.create_all()
-
-    from . import views
-    from . import auth
-
-    app.register_blueprint(views.views)
-    app.register_blueprint(auth.auth)
-
     return app
-

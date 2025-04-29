@@ -1,3 +1,26 @@
+{% extends "base.html" %}
+
+{% block title %}Подарки - UnrealShop{% endblock %}
+
+{% block content %}
 <h1>🎁 Подарки и полезности</h1>
-<p>всякие приятности и интересные штуки</p>
+
+<div class="product-grid">
+    {% if products %}
+        {% for product in products %}
+            <div class="product-card">
+                <img src="{{ url_for('static', filename=product.image) }}" alt="{{ product.name }}">
+                <h4>{{ product.name }}</h4>
+                <p>{{ product.description | truncate(60) }}</p>
+                <p><strong>{{ product.price | round(2) }} руб.</strong></p>
+                <a href="{{ url_for('views.product', product_id=product.id) }}" class="btn">Подробнее</a>
+            </div>
+        {% endfor %}
+    {% else %}
+        <p>В этой категории пока нет товаров.</p>
+    {% endif %}
+</div>
+
+<br>
 <a href="{{ url_for('views.catalog') }}">⬅️ Назад в каталог</a>
+{% endblock %}
