@@ -2,6 +2,7 @@ from flask_login import login_required, current_user
 
 from .models import Product, CartItem
 from .db import db
+from .send_email import send_email
 from sqlalchemy.sql import text
 from flask import Blueprint, render_template
 from flask import redirect, url_for, request
@@ -9,6 +10,7 @@ from flask_login import login_required, current_user
 
 
 views = Blueprint('views', __name__)
+
 
 @views.route('/')
 def home():
@@ -23,16 +25,19 @@ def home():
         print(f"Ошибка БД: {e}")
         return "<center><h2>Добро пожаловать в UnrealShop (режим без БД)</h2></center>"
 
+
 @views.route('/profile')
 @login_required
 def profile():
     return render_template('profile.html', user=current_user)
+
 
 @views.route('/cart')
 @login_required  # Доступно только авторизованным
 def cart():
     cart_items = CartItem.query.filter_by(user_id=current_user.id).all()
     return render_template('cart.html', cart_items=cart_items)
+
 
 @views.route('/add_to_cart/<int:product_id>', methods=['POST'])
 @login_required  # Доступно только авторизованным
@@ -53,6 +58,7 @@ def add_to_cart(product_id):
     db.session.commit()
     return redirect(url_for('views.cart'))
 
+
 @views.route('/remove_from_cart/<int:item_id>', methods=['POST'])
 @login_required
 def remove_from_cart(item_id):
@@ -70,24 +76,29 @@ def remove_from_cart(item_id):
     db.session.commit()
     return redirect(url_for('views.cart'))
 
+
 @views.route('/catalog')
 def catalog():
     return render_template('catalog.html')
+
 
 @views.route('/catalog/clothing')
 def clothing():
     clothes = Product.query.filter_by(category='clothing').all()
     return render_template('clothing.html', products=clothes)
 
+
 @views.route('/catalog/accessories')
 def accessories():
     items = Product.query.filter_by(category='accessories').all()
     return render_template('accessories.html', products=items)
 
+
 @views.route('/catalog/gifts')
 def gifts():
     items = Product.query.filter_by(category='gifts').all()
     return render_template('gifts.html', products=items)
+
 
 @views.route('/product/<int:product_id>')
 def product(product_id):
@@ -95,6 +106,31 @@ def product(product_id):
     product = Product.query.get_or_404(product_id)
     return render_template('product.html', product=product)
 
+
 @views.route('/about')
 def about():
     return render_template('about.html')
+
+
+@views.route('/cart/checkout')
+@login_required
+def checkout():
+    cart_items = CartItem.query.filter_by(user_id=current_user.id).all()
+    sum = 0
+    for item in cart_items:
+        sum += item.product.price * item.quantity
+    sum = round(sum, 2)
+    return render_template('checkout.html', cart_items=cart_items, sum=sum)
+
+
+@views.route('/order_message')
+@login_required
+def order_message():
+    success = send_email(current_user)
+
+    cart_items = CartItem.query.filter_by(user_id=current_user.id).all()
+    for item in cart_items:
+        db.session.delete(item)  # удаление заказанных товаров из корзины
+    db.session.commit()
+
+    return render_template('order_message.html', success=success)

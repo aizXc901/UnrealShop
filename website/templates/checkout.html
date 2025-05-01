@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Оформление заказа</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <a href="{{ url_for('views.home') }}" class="btn">🏠 На главную</a>
+    <h1>Оформление заказа</h1>
+    <div class="product-grid">
+        {% for item in cart_items %}
+                <div class="product-card">
+                    <img src="{{ url_for('static', filename=item.product.image) }}" alt="{{ item.product.name }}">
+                    <h4>{{ item.product.name }}</h4>
+                    <p>Цена: {{ item.product.price | round(2) }} руб.</p>
+                    <p>Количество: {{ item.quantity }}</p>
+                </div>
+        {% endfor %}
+    </div>
+    <h2>Итого: {{ sum }} руб.</h2>
+    <div class="checkout">
+    {% if cart_items %}
+        <form action="{{ url_for('views.order_message') }}">
+            <button type="submit" class="btn btn-big">Подтвердить заказ</button>
+        </form>
+    {% endif %}
+    </div>
+</body>
+</html>

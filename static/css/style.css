@@ -34,6 +34,19 @@ h1, h2, h3 {
     margin-top: 10px;
 }
 
+/*Кнопка оформления заказа*/
+.btn-big {
+    background-color: #5c67f2;
+    font-size: 24px;
+    color: white;
+    border: none;
+    padding: 15px 40px;
+    border-radius: 8px;
+    cursor: pointer;
+    margin-top: 20px;
+}
+
+
 /* Стили для карточек товара */
 .product-grid {
     display: flex;
@@ -75,4 +88,13 @@ h1, h2, h3 {
 
 .about-list li {
     margin-bottom: 8px;
+}
+
+.container {
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    padding: 30px;
+    max-width: 600px;
+    margin: auto;
 }
