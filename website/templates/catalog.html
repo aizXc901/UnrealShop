@@ -1,20 +1,88 @@
-<!DOCTYPE html>
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
     <title>Каталог товаров</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            background-color: #f4f2fa;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            color: #7d5ba6;
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        .catalog-container {
+            background: white;
+            padding: 40px;
+            border-radius: 16px;
+            box-shadow: 0 10px 30px rgba(125, 91, 166, 0.1);
+            text-align: center;
+            max-width: 600px;
+            width: 100%;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 30px;
+            color: #7d5ba6;
+        }
+
+        .catalog-list {
+            list-style: none;
+            padding: 0;
+            margin-bottom: 30px;
+        }
+
+        .catalog-list li {
+            margin-bottom: 16px;
+        }
+
+        .catalog-list a {
+            font-size: 1.2rem;
+            text-decoration: none;
+            color: #8e5bb3;
+            padding: 12px 24px;
+            display: inline-block;
+            background-color: #f1e7fb;
+            border-radius: 10px;
+            transition: background-color 0.2s ease;
+        }
+
+        .catalog-list a:hover {
+            background-color: #e3d3f8;
+        }
+
+        .btn-back {
+            background-color: #a88ed8;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            font-size: 1rem;
+            border-radius: 8px;
+            transition: background-color 0.3s ease;
+            text-decoration: none;
+        }
+
+        .btn-back:hover {
+            background-color: #8d71c1;
+        }
+    </style>
 </head>
 <body>
-    <div class="container">
+    <div class="catalog-container">
         <h1>🛍️ Каталог товаров</h1>
-        <ul>
+        <ul class="catalog-list">
             <li><a href="{{ url_for('views.clothing') }}">👕 Одежда</a></li>
             <li><a href="{{ url_for('views.accessories') }}">👜 Аксессуары</a></li>
             <li><a href="{{ url_for('views.gifts') }}">🎁 Подарки и полезности</a></li>
         </ul>
 
-        <a href="{{ url_for('views.home') }}"><button>⬅️ Назад на главную</button></a>
+        <a href="{{ url_for('views.home') }}" class="btn-back">⬅️ Назад на главную</a>
     </div>
 </body>
 </html>

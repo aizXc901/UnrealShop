@@ -1,22 +1,26 @@
 {% extends "base.html" %}
+
 {% block title %}Вход{% endblock %}
 
 {% block content %}
-<h2>Вход в аккаунт</h2>
+<div class="auth-container">
+    <h2>Вход в аккаунт</h2>
+    <form method="POST" class="auth-form">
+        <input type="text" name="email" placeholder="Email" required><br>
+        <input type="password" name="password" placeholder="Пароль" required><br>
+        <button type="submit" class="btn-submit">Войти</button>
+    </form>
 
-<form method="POST">
-    <input type="text" name="email" placeholder="Email" required><br>
-    <input type="password" name="password" placeholder="Пароль" required><br>
-    <button type="submit">Войти</button>
-</form>
+    {% with messages = get_flashed_messages() %}
+        {% if messages %}
+            <ul class="flashes">
+                {% for message in messages %}
+                    <li class="flash-message">{{ message }}</li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+    {% endwith %}
 
-{% with messages = get_flashed_messages() %}
-  {% if messages %}
-    <ul class="flashes">
-      {% for message in messages %}
-        <li>{{ message }}</li>
-      {% endfor %}
-    </ul>
-  {% endif %}
-{% endwith %}
+    <p class="auth-switch">Нет аккаунта? <a href="{{ url_for('auth.register') }}">Зарегистрироваться</a></p>
+</div>
 {% endblock %}

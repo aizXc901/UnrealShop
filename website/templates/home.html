@@ -3,31 +3,33 @@
 {% block title %}Главная{% endblock %}
 
 {% block content %}
-<section class="hero">
-    <h2>Добро пожаловать в наш магазин!</h2>
-    <p>Хоть он и ненастоящий, но всё ещё потрясающий!</p>
-    <a href="{{ url_for('views.catalog') }}" class="btn">🛍️ Окунуться в мир виртуальных товаров!</a>
+<section class="text-center mb-5">
+    <h2 class="text-primary">Добро пожаловать в наш магазин!</h2>
+    <p class="lead">Хоть он и ненастоящий, но всё ещё потрясающий!</p>
+    <a href="{{ url_for('views.catalog') }}" class="btn btn-primary btn-lg">🛍️ Поехали!</a>
 </section>
 
-<!-- КНОПКА переход в профиль или вход -->
-<div class="user-actions">
+<div class="text-center mb-4">
     {% if current_user.is_authenticated %}
-        <a href="{{ url_for('views.profile') }}"><button>👤 Профиль</button></a>
+        <a href="{{ url_for('views.profile') }}" class="btn btn-primary">👤 Профиль</a>
     {% else %}
-        <a href="{{ url_for('auth.login') }}"><button>🔐 Войти</button></a>
+        <a href="{{ url_for('auth.login') }}" class="btn btn-primary">🔐 Войти</a>
     {% endif %}
 </div>
 
-<!-- Секция с рекомендациями -->
-<section class="featured-products">
-    <h3>✨ Рекомендуем к покупке</h3>
-    <div class="product-grid">
+<section class="mb-5">
+    <h3 class="text-primary mb-4">✨ Рекомендуем к покупке</h3>
+    <div class="row row-cols-1 row-cols-md-3 g-4">
         {% for product in products %}
-        <div class="product-card">
-            <img src="{{ url_for('static', filename=product.image) }}" alt="{{ product.name }}">
-            <h4>{{ product.name }}</h4>
-            <p>{{ product.description|truncate(80) }}</p>
-            <a href="{{ url_for('views.product', product_id=product.id) }}" class="btn">Подробнее</a>
+        <div class="col">
+            <div class="card h-100 shadow-sm">
+                <img src="{{ url_for('static', filename=product.image) }}" class="card-img-top" alt="{{ product.name }}">
+                <div class="card-body">
+                    <h5 class="card-title">{{ product.name }}</h5>
+                    <p class="card-text">{{ product.description|truncate(80) }}</p>
+                    <a href="{{ url_for('views.product', product_id=product.id) }}" class="btn btn-outline-primary">Подробнее</a>
+                </div>
+            </div>
         </div>
         {% endfor %}
     </div>

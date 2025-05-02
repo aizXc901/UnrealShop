@@ -13,16 +13,15 @@
         <!-- Кнопка добавления в корзину -->
         {% if current_user.is_authenticated %}
             <form action="{{ url_for('views.add_to_cart', product_id=product.id) }}" method="POST">
-                <button type="submit">Добавить в корзину</button>
+                <button type="submit" class="btn btn-add-to-cart">Добавить в корзину</button>
             </form>
         {% else %}
-            <a href="{{ url_for('auth.login') }}"><button>Войти, чтобы добавить</button></a>
+            <a href="{{ url_for('auth.login') }}"><button class="btn btn-login">Войти, чтобы добавить</button></a>
         {% endif %}
 
         <!-- Новая кнопка: На главную -->
         <br><br>
-        <a href="{{ url_for('views.home') }}" class="btn-back">🏠 На главную</a>
-
+        <a href="{{ url_for('views.home') }}" class="btn btn-back">🏠 На главную</a>
     </div>
 </div>
 {% endblock %}

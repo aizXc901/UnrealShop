@@ -25,6 +25,10 @@ def home():
         print(f"Ошибка БД: {e}")
         return "<center><h2>Добро пожаловать в UnrealShop (режим без БД)</h2></center>"
 
+@views.errorhandler(404)
+def page_not_found(error):
+    return render_template("404.html"), 404
+
 
 @views.route('/profile')
 @login_required

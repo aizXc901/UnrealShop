@@ -5,7 +5,7 @@
 {% block content %}
 <h2>🛒 Моя корзина</h2>
 
-<a href="{{ url_for('views.home') }}" class="btn">🏠 На главную</a>
+<a href="{{ url_for('views.home') }}" class="btn btn-primary">🏠 На главную</a>
 <br><br>
 
 <div class="product-grid">
@@ -13,30 +13,27 @@
         {% for item in cart_items %}
             <div class="product-card">
                 <img src="{{ url_for('static', filename=item.product.image) }}" alt="{{ item.product.name }}">
-                <h4>{{ item.product.name }}</h4>
-                <p>Цена: {{ item.product.price | round(2) }} руб.</p>
-                <p>Количество: {{ item.quantity }}</p>
-                <p>Общая стоимость: {{ (item.product.price * item.quantity) | round(2) }} руб.</p>
-
-                <!-- Форма уменьшения или удаления товара -->
-                <form action="{{ url_for('views.remove_from_cart', item_id=item.id) }}" method="POST">
-                    <button type="submit" class="btn">➖ Удалить / уменьшить</button>
-                </form>
+                <div class="product-details">
+                    <h4>{{ item.product.name }}</h4>
+                    <p>Цена: <strong>{{ item.product.price | round(2) }}</strong> руб.</p>
+                    <p>Количество: <strong>{{ item.quantity }}</strong></p>
+                    <p>Общая стоимость: <strong>{{ (item.product.price * item.quantity) | round(2) }}</strong> руб.</p>
+                    <form action="{{ url_for('views.remove_from_cart', item_id=item.id) }}" method="POST">
+                        <button type="submit" class="btn">➖ Удалить / уменьшить</button>
+                    </form>
+                </div>
             </div>
         {% endfor %}
-
     {% else %}
         <p>Ваша корзина пуста.</p>
     {% endif %}
 </div>
-<div class="checkout">
-    {% if cart_items %}
+
+{% if cart_items %}
+    <div class="checkout">
         <form action="{{ url_for('views.checkout') }}">
-            <button type="submit" class="btn btn-big">Оформить заказ</button>
+            <button type="submit" class="btn btn-big btn-primary">🧾 Оформить заказ</button>
         </form>
-    {% endif %}
-</div>
+    </div>
+{% endif %}
 {% endblock %}
-
-
-<a>href=</a>

@@ -6,16 +6,24 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
 </head>
 <body>
-    <div class="container">
-        <h1>Профиль пользователя</h1>
+    <div class="profile-container">
+        <h1>👤 Профиль пользователя</h1>
 
-        <p><strong>Email:</strong> {{ user.email }}</p>
-        <p><strong>Пароль:</strong> 🔒 скрыт</p>
+        <div class="profile-info">
+            <p><strong>Email:</strong> {{ user.email }}</p>
+            <p><strong>Пароль:</strong> 🔒 скрыт</p>
+        </div>
 
         <div class="buttons">
-            <a href="{{ url_for('views.home') }}"><button>🏠 Главное меню</button></a>
-            <a href="{{ url_for('views.cart') }}"><button>🛒 Моя корзина</button></a>
-            <a href="{{ url_for('auth.logout') }}"><button>🚪 Выйти</button></a>
+            <a href="{{ url_for('views.home') }}">
+                <button class="btn btn-back">🏠 Главное меню</button>
+            </a>
+            <a href="{{ url_for('views.cart') }}">
+                <button class="btn btn-cart">🛒 Моя корзина</button>
+            </a>
+            <a href="{{ url_for('auth.logout') }}">
+                <button class="btn btn-logout">🚪 Выйти</button>
+            </a>
         </div>
     </div>
 </body>
