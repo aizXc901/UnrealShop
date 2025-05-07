@@ -18,7 +18,7 @@
                     <p>Цена: <strong>{{ item.product.price | round(2) }}</strong> руб.</p>
                     <p>Количество: <strong>{{ item.quantity }}</strong></p>
                     <p>Общая стоимость: <strong>{{ (item.product.price * item.quantity) | round(2) }}</strong> руб.</p>
-                    <form action="{{ url_for('views.remove_from_cart', item_id=item.id) }}" method="POST">
+                    <form action="{{ url_for('views.remove_from_cart', item_id=item.id, page='cart') }}" method="POST">
                         <button type="submit" class="btn">➖ Удалить / уменьшить</button>
                     </form>
                 </div>

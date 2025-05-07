@@ -521,3 +521,15 @@ footer .footer-text {
     background-color: #6a4f94;
     transform: scale(1.05);
 }
+
+.plus-container {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.quantity {
+    min-width: 30px;
+    align-items: center;
+    font-weight: bold;
+}
