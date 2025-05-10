@@ -15,15 +15,9 @@
         </div>
 
         <div class="buttons">
-            <a href="{{ url_for('views.home') }}">
-                <button class="btn btn-back">🏠 Главное меню</button>
-            </a>
-            <a href="{{ url_for('views.cart') }}">
-                <button class="btn btn-cart">🛒 Моя корзина</button>
-            </a>
-            <a href="{{ url_for('auth.logout') }}">
-                <button class="btn btn-logout">🚪 Выйти</button>
-            </a>
+            <a href="{{ url_for('views.home') }}" class="btn profile-btn">🏠 Главное меню</a>
+            <a href="{{ url_for('views.cart') }}" class="btn profile-btn">🛒 Моя корзина</a>
+            <a href="{{ url_for('auth.logout') }}" class="btn profile-btn">🚪 Выйти</a>
         </div>
     </div>
 </body>

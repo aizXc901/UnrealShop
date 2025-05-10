@@ -6,25 +6,40 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
 </head>
 <body>
-    <a href="{{ url_for('views.home') }}" class="btn">🏠 На главную</a>
-    <h1>Оформление заказа</h1>
-    <div class="product-grid">
-        {% for item in cart_items %}
-                <div class="product-card">
-                    <img src="{{ url_for('static', filename=item.product.image) }}" alt="{{ item.product.name }}">
-                    <h4>{{ item.product.name }}</h4>
-                    <p>Цена: {{ item.product.price | round(2) }} руб.</p>
-                    <p>Количество: {{ item.quantity }}</p>
+    <main>
+        <div class="checkout-container">
+            <!-- Центрируем кнопку "На главную" -->
+            <div class="top-bar">
+                <a href="{{ url_for('views.home') }}" class="btn btn-back">🏠 На главную</a>
+            </div>
+
+            <h1>🧾 Оформление заказа</h1>
+
+            <!-- Товары идут в столбик, в вертикальной линии -->
+            <div class="product-list">
+                {% for item in cart_items %}
+                    <div class="product-card">
+                        <img src="{{ url_for('static', filename=item.product.image) }}" alt="{{ item.product.name }}">
+                        <h4>{{ item.product.name }}</h4>
+                        <p>Цена: {{ item.product.price | round(2) }} руб.</p>
+                        <p>Количество: {{ item.quantity }}</p>
+                    </div>
+                {% endfor %}
+            </div>
+
+            <!-- Итоговая сумма, ниже товаров -->
+            <div class="order-total-container">
+                <h2 class="order-total">Итого: {{ sum }} руб.</h2>
+            </div>
+
+            {% if cart_items %}
+                <div class="checkout">
+                    <form action="{{ url_for('views.order_message') }}">
+                        <button type="submit" class="btn btn-big">✅ Подтвердить заказ</button>
+                    </form>
                 </div>
-        {% endfor %}
-    </div>
-    <h2>Итого: {{ sum }} руб.</h2>
-    <div class="checkout">
-    {% if cart_items %}
-        <form action="{{ url_for('views.order_message') }}">
-            <button type="submit" class="btn btn-big">Подтвердить заказ</button>
-        </form>
-    {% endif %}
-    </div>
+            {% endif %}
+        </div>
+    </main>
 </body>
 </html>

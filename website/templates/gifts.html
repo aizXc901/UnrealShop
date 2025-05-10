@@ -12,8 +12,10 @@
                 <img src="{{ url_for('static', filename=product.image) }}" alt="{{ product.name }}">
                 <h4>{{ product.name }}</h4>
                 <p>{{ product.description | truncate(60) }}</p>
-                <p><strong>{{ product.price | round(2) }} руб.</strong></p>
-                <a href="{{ url_for('views.product', product_id=product.id) }}" class="btn">Подробнее</a>
+                <p>Цена: {{ product.price | round(2) }} руб.</p>
+                <div class="btn-wrapper">
+                    <a href="{{ url_for('views.product', product_id=product.id) }}" class="btn btn-outline-primary btn-details">Подробнее</a>
+                </div>
             </div>
         {% endfor %}
     {% else %}
@@ -22,5 +24,7 @@
 </div>
 
 <br>
-<a href="{{ url_for('views.catalog') }}">⬅️ Назад в каталог</a>
+<div class="catalog-container">
+    <a href="{{ url_for('views.catalog') }}" class="btn-back">⬅️ Назад в каталог</a>
+</div>
 {% endblock %}

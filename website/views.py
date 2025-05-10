@@ -80,6 +80,18 @@ def remove_from_cart(item_id):
     db.session.commit()
     return redirect(url_for('views.cart'))
 
+@views.route('/cart/decrease/<int:product_id>', methods=['POST'])
+@login_required
+def decrease_quantity(product_id):
+    cart_item = CartItem.query.filter_by(user_id=current_user.id, product_id=product_id).first()
+    if cart_item:
+        if cart_item.quantity > 1:
+            cart_item.quantity -= 1
+            db.session.commit()
+        else:
+            db.session.delete(cart_item)
+            db.session.commit()
+    return redirect(request.referrer or url_for('views.cart'))
 
 @views.route('/catalog')
 def catalog():

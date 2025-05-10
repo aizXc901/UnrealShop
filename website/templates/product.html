@@ -10,14 +10,21 @@
         <p class="price">{{ product.price | round(2) }} руб.</p>
         <p class="description">{{ product.description }}</p>
 
-        <!-- Кнопка добавления в корзину -->
         {% if current_user.is_authenticated %}
             {% if cart_item %}
-                <div class="plus-container">
-                    <form action="{{ url_for('views.cart') }}">
-                        <button type="submit" class="btn">🛒 В корзину</button>
+                <div class="quantity-controls" style="display: flex; align-items: center; justify-content: center; gap: 10px;">
+
+                    <!-- Уменьшить количество -->
+                    <form action="{{ url_for('views.decrease_quantity', product_id=product.id) }}" method="POST">
+                        <button type="submit" class="btn">-</button>
                     </form>
-                    <div class="quantity"><strong>{{ cart_item.quantity }}</strong></div>
+
+                    <!-- Кнопка "В корзину" -->
+                    <form action="{{ url_for('views.cart') }}">
+                        <button type="submit" class="btn">🛒 Добавить {{ cart_item.quantity }} в корзину</button>
+                    </form>
+
+                    <!-- Увеличить количество -->
                     <form action="{{ url_for('views.add_to_cart', product_id=product.id) }}" method="POST">
                         <button type="submit" class="btn">+</button>
                     </form>
@@ -32,7 +39,7 @@
             <a href="{{ url_for('auth.login') }}"><button class="btn btn-login">Войти, чтобы добавить</button></a>
         {% endif %}
 
-        <!-- Новая кнопка: На главную -->
+        <!-- Кнопка "На главную" -->
         <br><br>
         <a href="{{ url_for('views.home') }}" class="btn btn-back">🏠 На главную</a>
     </div>
