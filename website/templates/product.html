@@ -12,9 +12,22 @@
 
         <!-- Кнопка добавления в корзину -->
         {% if current_user.is_authenticated %}
-            <form action="{{ url_for('views.add_to_cart', product_id=product.id) }}" method="POST">
-                <button type="submit" class="btn btn-add-to-cart">Добавить в корзину</button>
-            </form>
+            {% if cart_item %}
+                <div class="plus-container">
+                    <form action="{{ url_for('views.cart') }}">
+                        <button type="submit" class="btn">🛒 В корзину</button>
+                    </form>
+                    <div class="quantity"><strong>{{ cart_item.quantity }}</strong></div>
+                    <form action="{{ url_for('views.add_to_cart', product_id=product.id) }}" method="POST">
+                        <button type="submit" class="btn">+</button>
+                    </form>
+
+                </div>
+            {% else %}
+                <form action="{{ url_for('views.add_to_cart', product_id=product.id) }}" method="POST">
+                    <button type="submit" class="btn btn-add-to-cart">Добавить в корзину</button>
+                </form>
+            {% endif %}
         {% else %}
             <a href="{{ url_for('auth.login') }}"><button class="btn btn-login">Войти, чтобы добавить</button></a>
         {% endif %}

@@ -60,7 +60,7 @@ def add_to_cart(product_id):
         db.session.add(cart_item)
 
     db.session.commit()
-    return redirect(url_for('views.cart'))
+    return redirect(url_for('views.product', product_id=product.id, cart_item=cart_item))
 
 
 @views.route('/remove_from_cart/<int:item_id>', methods=['POST'])
@@ -108,7 +108,8 @@ def gifts():
 def product(product_id):
     # Получаем товар из базы данных
     product = Product.query.get_or_404(product_id)
-    return render_template('product.html', product=product)
+    cart_item = CartItem.query.filter_by(user_id=current_user.id, product_id=product.id).first()
+    return render_template('product.html', product=product, cart_item=cart_item)
 
 
 @views.route('/about')
