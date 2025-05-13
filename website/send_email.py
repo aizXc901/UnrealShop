@@ -46,7 +46,6 @@ def send_email(customer, to_email=admin_email):
     msg.attach(MIMEText(body, 'plain'))
 
     try:
-        # Подключаемся к серверу и отправляем письмо
         server = smtplib.SMTP(smtp_server, smtp_port)
         server.starttls()
         server.login(from_email, password)
