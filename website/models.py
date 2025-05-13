@@ -1,6 +1,5 @@
-
 from .db import db
-from flask_login import UserMixin
+from flask_login import UserMixin, AnonymousUserMixin, login_manager
 
 
 class User(db.Model, UserMixin):
@@ -22,3 +21,8 @@ class CartItem(db.Model):
     product_id = db.Column(db.Integer, db.ForeignKey('product.id'), nullable=False)
     quantity = db.Column(db.Integer, default=1)
     product = db.relationship('Product', backref='cart_items')
+
+class Guest(AnonymousUserMixin):
+    id = None
+
+login_manager.anonymous_user = Guest

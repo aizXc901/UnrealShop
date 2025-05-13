@@ -1,10 +1,11 @@
 from flask_login import login_required, current_user
 
+
 from .models import Product, CartItem
 from .db import db
 from .send_email import send_email
 from sqlalchemy.sql import text
-from flask import Blueprint, render_template
+from flask import Blueprint, render_template, session
 from flask import redirect, url_for, request
 from flask_login import login_required, current_user
 
@@ -118,9 +119,19 @@ def gifts():
 
 @views.route('/product/<int:product_id>')
 def product(product_id):
-    # Получаем товар из базы данных
     product = Product.query.get_or_404(product_id)
-    cart_item = CartItem.query.filter_by(user_id=current_user.id, product_id=product.id).first()
+    cart_item = None  # по умолчанию значение
+
+    if current_user.is_authenticated:
+        cart_item = CartItem.query.filter_by(user_id=current_user.id, product_id=product.id).first()
+    else:
+        # сессия для временного хранения
+        cart = session.get('cart', {})
+        # если над проверить наличие товара в корзине гостя
+        in_cart = str(product.id) in cart
+        # Можно передать в шаблон флаг или количество
+        return render_template('product.html', product=product, in_cart=in_cart)
+
     return render_template('product.html', product=product, cart_item=cart_item)
 
 
