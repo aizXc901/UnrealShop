@@ -10,7 +10,7 @@
 -	Backend: Python + Flask (возможно)
 -	Frontend: HTML/CSS/Bootstrap
 -	База данных: SQLite
--	Хостинг: Heroku
+-	Хостинг: Glitch
 
 Основные функции:
 -	Регистрация пользователей
