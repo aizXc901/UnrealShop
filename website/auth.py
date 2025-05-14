@@ -6,6 +6,7 @@ from .db import db
 
 auth = Blueprint('auth', __name__)
 
+
 @auth.route('/register', methods=['GET', 'POST'])
 def register():
     if request.method == 'POST':
@@ -35,7 +36,11 @@ def register():
             db.session.add(new_user)
             db.session.commit()
             print("User saved successfully")  # Отладочный вывод
-            flash("Регистрация прошла успешно")
+
+            # Автоматический вход после регистрации
+            login_user(new_user)
+            flash("Регистрация прошла успешно. Вы вошли в аккаунт")
+
             return redirect(url_for('views.home'))
         except Exception as e:
             print("Ошибка при сохранении:", e)  # Вывод ошибки
